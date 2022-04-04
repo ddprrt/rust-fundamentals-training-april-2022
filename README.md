@@ -68,7 +68,7 @@ We recommend the following extensions:
 
 ## Folder structure
 
-- `[./examples](examples)` - All the examples we do together in our workshop
-- `[./exercises](exercises)` - Homework and workshop exercises complete with tests
-- `[./solutions](solutions)` - Solutions to homework and workshop exercises as a reference for you
-- `[./assets](assets)` - Images, etc. for the documentation files, nothing that important.
+- [./examples](`examples`) - All the examples we do together in our workshop
+- [./exercises](`exercises`) - Homework and workshop exercises complete with tests
+- [./solutions](`solutions`) - Solutions to homework and workshop exercises as a reference for you
+- [./assets](`assets`) - Images, etc. for the documentation files, nothing that important.
