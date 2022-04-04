@@ -7,7 +7,7 @@ impl Clock {
 }
 
 fn main() {
-    // Uncomment this!
+    // Uncomment to play around
     //let clock = Clock::new(10, 10);
     //println!("{}", clock.hours);
     //println!("{}", clock.minutes);
