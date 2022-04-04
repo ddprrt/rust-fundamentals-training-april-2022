@@ -1,10 +1,27 @@
+struct Point {
+    x: f32,
+    y: f32
+}
+
+impl Point {
+    fn new(x: f32, y: f32) -> Self {
+        Self {
+            x, y
+        }
+    }
+    
+    fn length(self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
 struct Person {
     name: String,
     age: u32
 }
 
 impl Person {
-    // static function, namespaced function
+    // associated function
     fn new(name: &str, age: u32) -> Self {
         Self {
             name: name.to_string(),
@@ -12,7 +29,7 @@ impl Person {
         }
     }
 
-    // associated function or method
+    // associated function, method
     fn print_me(self) {
         println!("Hi, I'm {}, and I'm {} years old", self.name, self.age);
     }
@@ -62,6 +79,12 @@ fn main() {
     let _person = Person { name: String::from("Stefan"), age: 39 };
     let another_person = Person::new("Stefan", 39);
     another_person.print_me();
+
+    println!("{}", Point::new(2.0, 3.0).length());
+
+    let point = Point::new(2.0, 3.0);
+    let _length = Point::length(point);
+    //let _length = point.length();
 }
 
 fn print_collected_vector(vec: Vec<u16>) {
@@ -86,4 +109,22 @@ fn test_my_work() {
 #[ignore]
 fn test_my_work2() {
     assert_eq!(2, 2);
+}
+
+struct Individual {
+    name: String,
+}
+
+enum Room {
+    Occupied(Individual),
+    Vacant,
+}
+
+impl Room {
+    fn is_occupied(self) -> bool {
+        match self {
+            Room::Occupied(_) => true,
+            Room::Vacant => false
+        }
+    }
 }
