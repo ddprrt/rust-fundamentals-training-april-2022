@@ -11,3 +11,13 @@ By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
 3. Run `cargo test` or `cargo test --release` to run your tests
 4. Use the `main` function if you want to try things out.
 5. Run `cargo run` or `cargo run --release` to run your main function
+
+## Goals of this example
+
+Learn:
+
+1. Main control flow
+2. Loops
+3. Conditions
+4. Numbers
+5. Expressions
