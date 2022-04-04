@@ -66,3 +66,9 @@ We recommend the following extensions:
 
 - [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb). All Rust code is compiled against LLVM. This extension helps debugging LLVM code inside VS Code
 
+## Folder structure
+
+- `[./examples](examples)` - All the examples we do together in our workshop
+- `[./exercises](exercises)` - Homework and workshop exercises complete with tests
+- `[./solutions](solutions)` - Solutions to homework and workshop exercises as a reference for you
+- `[./assets](assets)` - Images, etc. for the documentation files, nothing that important.
