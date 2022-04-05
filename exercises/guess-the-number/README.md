@@ -26,7 +26,7 @@ use rand::{thread_rng, Rng};
 use the crate
 
 ```rs
-let number_to_guess = rng.gen_range(0..=50)
+let number_to_guess = rand::thread_rng().gen_range(0..=50);
 ```
 
 ### Reading from stdin
