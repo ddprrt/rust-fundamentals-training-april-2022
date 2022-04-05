@@ -1,16 +1,36 @@
-struct Clock {
-    
+pub struct Clock {
+    hours: i32,
+    minutes: i32,
 }
 
 impl Clock {
-    
+    pub fn new(hours: i32, minutes: i32) -> Self {
+        Self { hours, minutes }.normalize()
+    }
+
+    fn normalize(self) -> Self {
+        let mut hours = (self.hours + self.minutes / 60) % 24;
+        let mut minutes = self.minutes % 60;
+        if minutes < 0 {
+            minutes += 60;
+            hours -= 1;
+        }
+        if hours < 0 {
+            hours = (hours + 24) % 24;
+        }
+        Self { hours, minutes }
+    }
+
+    fn add_minutes(self, minutes: i32) -> Self {
+        Self::new(self.hours, self.minutes + minutes)
+    }
 }
 
 fn main() {
     // Uncomment this!
-    //let clock = Clock::new(10, 10);
-    //println!("{}", clock.hours);
-    //println!("{}", clock.minutes);
+    let clock = Clock::new(10, 10);
+    println!("{}", clock.hours);
+    println!("{}", clock.minutes);
 }
 
 //
@@ -18,7 +38,6 @@ fn main() {
 //
 
 #[test]
-#[ignore]
 fn test_on_the_hour() {
     let clock = Clock::new(8, 0);
     assert_eq!(clock.hours, 8);
@@ -26,28 +45,24 @@ fn test_on_the_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_midnight_is_zero_hours() {
     let clock: Clock = Clock::new(24, 0);
     assert_eq!(clock.hours, 0);
 }
 
 #[test]
-#[ignore]
 fn test_hour_rolls_over() {
     let clock = Clock::new(25, 0);
     assert_eq!(clock.hours, 1);
 }
 
 #[test]
-#[ignore]
 fn test_hour_rolls_over_continuously() {
     let clock = Clock::new(100, 0);
     assert_eq!(clock.hours, 4);
 }
 
 #[test]
-#[ignore]
 
 fn test_sixty_minutes_is_next_hour() {
     let clock = Clock::new(1, 60);
@@ -55,7 +70,6 @@ fn test_sixty_minutes_is_next_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_minutes_roll_over() {
     let clock = Clock::new(0, 160);
     assert_eq!(clock.hours, 2);
@@ -63,7 +77,6 @@ fn test_minutes_roll_over() {
 }
 
 #[test]
-#[ignore]
 fn test_minutes_roll_over_continuously() {
     let clock = Clock::new(0, 1723);
     assert_eq!(clock.hours, 4);
@@ -71,7 +84,6 @@ fn test_minutes_roll_over_continuously() {
 }
 
 #[test]
-#[ignore]
 fn test_hours_and_minutes_roll_over() {
     let clock = Clock::new(25, 160);
     assert_eq!(clock.hours, 3);
@@ -79,7 +91,6 @@ fn test_hours_and_minutes_roll_over() {
 }
 
 #[test]
-#[ignore]
 fn test_hours_and_minutes_roll_over_continuously() {
     let clock = Clock::new(201, 3001);
     assert_eq!(clock.hours, 11);
@@ -87,7 +98,6 @@ fn test_hours_and_minutes_roll_over_continuously() {
 }
 
 #[test]
-#[ignore]
 fn test_hours_and_minutes_roll_over_to_exactly_midnight() {
     let clock = Clock::new(72, 8640);
     assert_eq!(clock.hours, 0);
@@ -95,7 +105,6 @@ fn test_hours_and_minutes_roll_over_to_exactly_midnight() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_hour() {
     let clock = Clock::new(-1, 15);
     assert_eq!(clock.hours, 23);
@@ -103,7 +112,6 @@ fn test_negative_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_hour_roll_over() {
     let clock = Clock::new(-25, 0);
     assert_eq!(clock.hours, 23);
@@ -111,7 +119,6 @@ fn test_negative_hour_roll_over() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_hour_roll_over_continuously() {
     let clock = Clock::new(-91, 0);
     assert_eq!(clock.hours, 5);
@@ -119,7 +126,6 @@ fn test_negative_hour_roll_over_continuously() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_minutes() {
     let clock = Clock::new(1, -40);
     assert_eq!(clock.hours, 0);
@@ -127,7 +133,6 @@ fn test_negative_minutes() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_minutes_roll_over() {
     let clock = Clock::new(1, -160);
     assert_eq!(clock.hours, 22);
@@ -135,7 +140,6 @@ fn test_negative_minutes_roll_over() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_minutes_roll_over_continuously() {
     let clock = Clock::new(1, -4820);
     assert_eq!(clock.hours, 16);
@@ -143,7 +147,6 @@ fn test_negative_minutes_roll_over_continuously() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_sixty_minutes_is_prev_hour() {
     let clock = Clock::new(2, -60);
     assert_eq!(clock.hours, 1);
@@ -151,7 +154,6 @@ fn test_negative_sixty_minutes_is_prev_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_hour_and_minutes_both_roll_over() {
     let clock = Clock::new(-25, -160);
     assert_eq!(clock.hours, 20);
@@ -159,7 +161,6 @@ fn test_negative_hour_and_minutes_both_roll_over() {
 }
 
 #[test]
-#[ignore]
 fn test_negative_hour_and_minutes_both_roll_over_continuously() {
     let clock = Clock::new(-121, -5810);
     assert_eq!(clock.hours, 22);
@@ -167,7 +168,6 @@ fn test_negative_hour_and_minutes_both_roll_over_continuously() {
 }
 
 #[test]
-#[ignore]
 fn test_zero_hour_and_negative_minutes() {
     let clock = Clock::new(0, -22);
     assert_eq!(clock.hours, 23);
@@ -179,7 +179,6 @@ fn test_zero_hour_and_negative_minutes() {
 //
 
 #[test]
-#[ignore]
 fn test_add_minutes() {
     let clock = Clock::new(10, 0).add_minutes(3);
     assert_eq!(clock.hours, 10);
@@ -187,7 +186,6 @@ fn test_add_minutes() {
 }
 
 #[test]
-#[ignore]
 fn test_add_no_minutes() {
     let clock = Clock::new(6, 41).add_minutes(0);
     assert_eq!(clock.hours, 06);
@@ -195,7 +193,6 @@ fn test_add_no_minutes() {
 }
 
 #[test]
-#[ignore]
 fn test_add_to_next_hour() {
     let clock = Clock::new(0, 45).add_minutes(40);
     assert_eq!(clock.hours, 01);
@@ -203,7 +200,6 @@ fn test_add_to_next_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_add_more_than_one_hour() {
     let clock = Clock::new(10, 0).add_minutes(61);
     assert_eq!(clock.hours, 11);
@@ -211,7 +207,6 @@ fn test_add_more_than_one_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_add_more_than_two_hours_with_carry() {
     let clock = Clock::new(0, 45).add_minutes(160);
     assert_eq!(clock.hours, 03);
@@ -219,7 +214,6 @@ fn test_add_more_than_two_hours_with_carry() {
 }
 
 #[test]
-#[ignore]
 fn test_add_across_midnight() {
     let clock = Clock::new(23, 59).add_minutes(2);
     assert_eq!(clock.hours, 00);
@@ -227,7 +221,6 @@ fn test_add_across_midnight() {
 }
 
 #[test]
-#[ignore]
 fn test_add_more_than_one_day() {
     let clock = Clock::new(5, 32).add_minutes(1500);
     assert_eq!(clock.hours, 06);
@@ -235,7 +228,6 @@ fn test_add_more_than_one_day() {
 }
 
 #[test]
-#[ignore]
 fn test_add_more_than_two_days() {
     let clock = Clock::new(1, 1).add_minutes(3500);
     assert_eq!(clock.hours, 11);
@@ -243,7 +235,6 @@ fn test_add_more_than_two_days() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_minutes() {
     let clock = Clock::new(10, 3).add_minutes(-3);
     assert_eq!(clock.hours, 10);
@@ -251,7 +242,6 @@ fn test_subtract_minutes() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_to_previous_hour() {
     let clock = Clock::new(10, 3).add_minutes(-30);
     assert_eq!(clock.hours, 09);
@@ -259,7 +249,6 @@ fn test_subtract_to_previous_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_more_than_an_hour() {
     let clock = Clock::new(10, 3).add_minutes(-70);
     assert_eq!(clock.hours, 08);
@@ -267,7 +256,6 @@ fn test_subtract_more_than_an_hour() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_across_midnight() {
     let clock = Clock::new(0, 3).add_minutes(-4);
     assert_eq!(clock.hours, 23);
@@ -275,7 +263,6 @@ fn test_subtract_across_midnight() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_more_than_two_hours() {
     let clock = Clock::new(0, 0).add_minutes(-160);
     assert_eq!(clock.hours, 21);
@@ -283,7 +270,6 @@ fn test_subtract_more_than_two_hours() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_more_than_two_hours_with_borrow() {
     let clock = Clock::new(6, 15).add_minutes(-160);
     assert_eq!(clock.hours, 03);
@@ -291,7 +277,6 @@ fn test_subtract_more_than_two_hours_with_borrow() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_more_than_one_day() {
     let clock = Clock::new(5, 32).add_minutes(-1500);
     assert_eq!(clock.hours, 04);
@@ -299,7 +284,6 @@ fn test_subtract_more_than_one_day() {
 }
 
 #[test]
-#[ignore]
 fn test_subtract_mores_than_two_days() {
     let clock = Clock::new(2, 20).add_minutes(-3000);
     assert_eq!(clock.hours, 00);
