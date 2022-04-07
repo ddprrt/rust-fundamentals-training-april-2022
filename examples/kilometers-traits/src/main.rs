@@ -6,7 +6,7 @@ struct Kilometers(f64);
 #[derive(Debug, Default)]
 pub struct Person {
     pub name: String,
-    pub age: u32
+    pub age: u32,
 }
 
 #[derive(PartialEq, Eq)]
@@ -64,7 +64,10 @@ fn main() {
     let driven_kms = Kilometers::new(1000.0);
     let some_more_kms = Kilometers::new(1001.0);
     let no_kms = Kilometers::default();
-    let _me = Person { name: "Stefan".to_string(), age: 39 };
+    let _me = Person {
+        name: "Stefan".to_string(),
+        age: 39,
+    };
     println!("{:?}", driven_kms);
     println!("{}", driven_kms);
     println!("{}", driven_kms > some_more_kms);
