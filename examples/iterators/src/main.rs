@@ -24,17 +24,57 @@ impl Iterator for Fibonacci {
 }
 
 fn main() {
-    let vec = vec![1, 2, 3, 4];
+    /*let vec = vec![1, 2, 3, 4];
 
     for i in vec.iter() {
         println!("{}", i);
     }
 
-    println!("{:?}", vec);
+    println!("{:?}", vec);*/
 
     for i in Fibonacci::default().into_iter() {
         println!("{}", i);
-    }   
+    }  
+
+    let mut fib = Fibonacci::default().into_iter();
+
+    loop {
+        let result = fib.next();
+        match result {
+            Some(result) => {
+                println!("{}", result);
+                if result == 5 {
+                    break;
+                }
+            },
+            None => {
+                break;
+            }
+        };
+    }
+
+    let mut fib = Fibonacci::default().into_iter();
+
+    while let Some(result) = fib.next() {
+        println!("{}", result);
+        if result == 5 {
+            break;
+        }
+        
+    }
+
+    for result in Fibonacci::default() {
+        println!("{}", result);
+        if result == 5 {
+            break;
+        }
+    }
+
+    for i in Fibonacci::default().take(10) {
+        println!("{}", i);
+    }
+
+    println!("{}", Fibonacci::default().nth(0).unwrap());
     
     let _collection = Vec::from_iter(Fibonacci::default().take(5));
 }
